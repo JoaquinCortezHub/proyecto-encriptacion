@@ -21,4 +21,11 @@
 - Usar subprogramas
 - Usar distintas estructuras
 - Validar TODOS los mecanismos
-- SOLO utilizar funciones "lenstring" o "substring"
+- SOLO utilizar funciones "strlen / .length()" o "substr"
+
+### Investigación
+
+- Función static_cast<int> para convertir caracteres a ASCII
+- cómo usar static_cast con un for y arreglos
+- ver cómo detenemos la carga de la palabra con el punto. (Do While)
+- Ver lógica de las vocales
