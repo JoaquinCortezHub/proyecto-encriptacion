@@ -10,7 +10,7 @@ void mostrarArray(char matrizPalabras[4][20]);
 int main (){
     int longFilas = 4;
     int longColumnas = 20;
-    char matrizPalabras [4][20];
+    char matrizPalabras [4][20] = {};
     int opcionUsuario;
     bool cargado = false;
 
@@ -43,6 +43,10 @@ int main (){
         case 2:
             if(cargado){
                 mostrarArray(matrizPalabras);
+                cout << "-------------------\n";
+                cout << "Proceso finalizado.\n";
+                system("pause");
+                system("cls");
             }
             else{
                 cout << "No se ha cargado el arreglo de palabras.\n";
@@ -52,6 +56,7 @@ int main (){
             break;
         case 0:
             cout << "Saliendo del programa...\n";
+            cout << "Conexion finalizada.\n";
             break;
         }
     } while (opcionUsuario != 0);
@@ -63,20 +68,27 @@ int main (){
 //* desarollo de funciones *//
 //cargarArray
 void cargarArray(char matrizPalabras[4][20]) {
-    char letra;
+    string palabra;
     for (int filas = 0; filas < 4; filas++) {
-        cout << "Ingrese la palabra " << filas + 1 << ": \n";
-        int columnas = 0;
-        for (int columnas = 0; columnas < 20; columnas++) {
-            cout << "Ingrese la letra de su palabra: \n";
-            cin >> letra;
-            if (letra == '.') {
-                break;
-            } else {
-                matrizPalabras[filas][columnas] = letra;
+        bool palabraValida = false;
+        while (!palabraValida) {
+            cout << "Ingrese la palabra " << filas + 1 << ": \n";
+            cin >> palabra;
+            int longitudPalabra = palabra.length();
+
+            if(longitudPalabra > 20) {
+                cout << "La palabra ingresada es demasiado larga. Ingrese una palabra de maximo 20 caracteres.\n";    
+            }
+            else {
+                palabraValida = true;
+                for(int columnas = 0; columnas < longitudPalabra; columnas++) {
+                    matrizPalabras[filas][columnas] = palabra[columnas];
+                }
+            }
+            for(int columnas = longitudPalabra; columnas < 20; columnas++) {
+                matrizPalabras[filas][columnas] = '\0'; //? Asigna el caracter nulo a las posiciones vacias. previene simbolo y datos basuras en el display.
             }
         }
-        matrizPalabras[filas][columnas] = '\0'; //? asigna  el caracter nulo al final de la palabra para darla como finalizada. evita signos raros.
     }
 }
 //MostrarArray
