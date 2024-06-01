@@ -1,4 +1,11 @@
-// palabra a codigo ASCII
+//TODO: Formatear correctamente caracteres ASCII.
+//TODO: Crear copia de matriz original en 'TransformarVocales'.
+//TODO: Validar input de palabras.
+//TODO: Implementar cambio de palabras a minusculas.
+
+//?PREGUNTAR: Input de palabras completas o letra por letra.
+//?PREGUNTAR: Uso de la funcion 'to_string'.
+
 #include <iostream>
 #include <string>
 #include <ctime>
@@ -9,9 +16,9 @@ void cargarArray(char matrizPalabras[4][20]);
 void mostrarArray(char matrizPalabras[4][20]);
 bool esVocal(char letra);
 void TransformarVocales(char matrizPalabras[4][20]);
+void TransformarASCII(char matrizPalabras[4][20]);
 
-int main()
-{
+int main() {
     int longFilas = 4;
     int longColumnas = 20;
     char matrizPalabras[4][20] = {};
@@ -19,8 +26,7 @@ int main()
     bool cargado = false;
 
     cout << "Bienvenido al sistema de encriptacion\n";
-    do
-    {
+    do {
         cout << "  MENU  \n";
         cout << "(1) - Llenar arreglos de palabras\n";
         cout << "(2) - Mostrar arreglo cargado\n";
@@ -30,8 +36,7 @@ int main()
         cout << "(0) - Salir del programa\n";
         cin >> opcionUsuario;
 
-        switch (opcionUsuario)
-        {
+        switch (opcionUsuario) {
         case 1:
             cout << "INDICACIONES: \n";
             cout << "Tiene la posibilidad de ingresar hasta 4 palabras de 20 caracteres como maximo.\n";
@@ -46,24 +51,7 @@ int main()
             system("cls");
             break;
         case 2:
-            if (cargado)
-            {
-                mostrarArray(matrizPalabras);
-                cout << "-------------------\n";
-                cout << "Proceso finalizado.\n";
-                system("pause");
-                system("cls");
-            }
-            else
-            {
-                cout << "No se ha cargado el arreglo de palabras.\n";
-                system("pause");
-                system("cls");
-            }
-            break;
-        case 4:
-            if(cargado) {
-                TransformarVocales(matrizPalabras);
+            if (cargado) {
                 mostrarArray(matrizPalabras);
                 cout << "-------------------\n";
                 cout << "Proceso finalizado.\n";
@@ -71,6 +59,37 @@ int main()
                 system("cls");
             }
             else {
+                cout << "No se ha cargado el arreglo de palabras.\n";
+                system("pause");
+                system("cls");
+            }
+            break;
+        case 3:
+            if (cargado) {
+                TransformarASCII(matrizPalabras);
+                cout << "-------------------\n";
+                cout << "Palabras encriptadas con exito.\n";
+                system("pause");
+                system("cls");
+            }
+            else {
+                cout << "No se ha cargado el arreglo de palabras.\n";
+                system("pause");
+                system("cls");
+            }
+            break;
+        case 4:
+            if (cargado)
+            {
+                TransformarVocales(matrizPalabras);
+                mostrarArray(matrizPalabras);
+                cout << "-------------------\n";
+                cout << "Palabras encriptadas con exito .\n";
+                system("pause");
+                system("cls");
+            }
+            else
+            {
                 cout << "No se ha cargado el arreglo de palabras.\n";
                 system("pause");
                 system("cls");
@@ -90,105 +109,110 @@ int main()
 // cargarArray
 
 // TODO: Extraer la validación de la longitud de las palabras en un subporgrama diferente.
-void cargarArray(char matrizPalabras[4][20])
-{
+void cargarArray(char matrizPalabras[4][20]) {
     string palabra;
-    for (int filas = 0; filas < 4; filas++)
-    {
+    for (int filas = 0; filas < 4; filas++) {
         bool palabraValida = false;
-        while (!palabraValida)
-        {
+        while (!palabraValida) {
             cout << "Ingrese la palabra " << filas + 1 << ": \n";
             cin >> palabra;
             int longitudPalabra = palabra.length();
 
-            if (longitudPalabra > 20)
-            {
+            if (longitudPalabra > 20) {
                 cout << "La palabra ingresada es demasiado larga. Ingrese una palabra de maximo 20 caracteres.\n";
             }
-            else
-            {
+            else {
                 palabraValida = true;
-                for (int columnas = 0; columnas < longitudPalabra; columnas++)
-                {
+                for (int columnas = 0; columnas < longitudPalabra; columnas++) {
                     matrizPalabras[filas][columnas] = palabra[columnas];
                 }
             }
-            for (int columnas = longitudPalabra; columnas < 20; columnas++)
-            {
+            for (int columnas = longitudPalabra; columnas < 20; columnas++) {
                 matrizPalabras[filas][columnas] = '\0'; //? Asigna el caracter nulo a las posiciones vacias. previene simbolos y datos basuras en el display.
             }
         }
     }
 }
 // MostrarArray
-void mostrarArray(char matrizPalabras[4][20])
-{
-    for (int filas = 0; filas < 4; filas++)
-    {
+void mostrarArray(char matrizPalabras[4][20]) {
+    for (int filas = 0; filas < 4; filas++) {
         cout << "Palabra " << filas + 1 << ": ";
-        for (int columnas = 0; columnas < 20; columnas++)
-        {
-            if (matrizPalabras[filas][columnas] == '\0')
-            { //?  si encuentra el caracter nulo, sale del bucle, la palabra ya termino, pasa a la siguiente.
+        for (int columnas = 0; columnas < 20; columnas++) {
+            if (matrizPalabras[filas][columnas] == '\0') { //?  si encuentra el caracter nulo, sale del bucle, la palabra ya termino, pasa a la siguiente.
                 break;
             }
             cout << matrizPalabras[filas][columnas];
         }
         cout << "\n";
     }
-}   
+}
 // TransformarVocales
-bool esVocal(char letra){
-    char vocales[]= {'a', 'e', 'i', 'o', 'u'};
+bool esVocal(char letra) {
+    char vocales[] = {'a', 'e', 'i', 'o', 'u'};
     for (int i = 0; i < 5; i++) {
-        if (letra == vocales[i]){
+        if (letra == vocales[i]) {
             return true;
         }
     }
     return false;
 }
 
-
 void TransformarVocales(char matrizPalabras[4][20]) {
     char arrayVocales[5] = {'a', 'e', 'i', 'o', 'u'};
     char arrayVocalesDesordenadas[5];
-
     srand(time(NULL)); //? Inicializamos la semilla de generacion.
-
-    for(int i = 0; i < 5; i++) {
+    for (int i = 0; i < 5; i++) {
         arrayVocalesDesordenadas[i] = arrayVocales[i];
     }
-
-    for(int i = 0; i < 5; i++) { //? Mezcla las vocales cambiando la posicion de sus subindices.
+    for (int i = 0; i < 5; i++) { //? Mezcla las vocales cambiando la posicion de sus subindices.
         int indiceRandom = rand() % 5;
         char auxiliar = arrayVocalesDesordenadas[i];
         arrayVocalesDesordenadas[i] = arrayVocalesDesordenadas[indiceRandom];
         arrayVocalesDesordenadas[indiceRandom] = auxiliar;
     }
-
-
-    for (int filas=0; filas < 4; filas++){
-        for (int columnas=0; columnas <20; columnas++){
+    for (int filas = 0; filas < 4; filas++) {
+        for (int columnas = 0; columnas < 20; columnas++) {
             char letraActual = matrizPalabras[filas][columnas];
-            if (letraActual=='\0') { //? si la palabra termina, deja de evaluar.
+            if (letraActual == '\0') { //? si la palabra termina, deja de evaluar.
                 break;
             }
-            if(esVocal(letraActual)){
+            if (esVocal(letraActual)) {
                 for (int i = 0; i < 5; i++) {
-                    if(letraActual==arrayVocales[i]){
+                    if (letraActual == arrayVocales[i]) {
                         matrizPalabras[filas][columnas] = arrayVocalesDesordenadas[i]; //? Asigna la vocal desordenada a la posicion actual de la palabra.
                         break;
-                }
-                
+                    }
                 }
             }
-    }
+        }
     }
 }
-// TransformarASCII
-// TransformarAmbos
+void TransformarASCII(char matrizPalabras[4][20]) {
+    char matrizASCII[4][60] = {}; //? 20 caracteres * 3 digitos del codigo ASCII = 60 columnas maximo.
 
-// A, E, I, O, U: asignarle numeros
-// rand() --> [4,2,1,0,3] <-- pasar
-//            {U,I,E,A,O}
+    for (int filas = 0; filas < 4; filas++) {
+        int indiceASCII = 0; //? este indice, cambia para colocar cada codigo en el subindice relacionado a la letra de la palabra a encriptar.
+
+        for (int columnas = 0; columnas < 20; columnas++) {
+            char letraActual = matrizPalabras[filas][columnas];
+            if (letraActual == '\0') {
+                break;
+            }
+
+            int codigoPalabra = int(letraActual); //? convierte la letra a su respectivo codigo.
+            string cadenaASCII = to_string(codigoPalabra); //? convierte dicho codigo a una representacion en forma de string para almacenarlo en la matriz.
+            for (int i = 0; i < cadenaASCII.length(); i++) {
+                matrizASCII[filas][indiceASCII++] = cadenaASCII[i];
+            }
+        }
+    }
+
+    for( int filas = 0; filas < 4; filas++) {
+        cout << "Palabra " << filas + 1 << ": ";
+        for( int columnas = 0; columnas < 60; columnas++) {
+            cout << matrizASCII[filas][columnas];
+        }
+        cout << "\n";
+    }
+}
+// TransformarAmbos
