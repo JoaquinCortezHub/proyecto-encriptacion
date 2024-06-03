@@ -3,8 +3,6 @@
 //!: Implementar cambio de palabras a minusculas.
 //TODO: Validar input de palabras.
 //TODO: Extraer la validación de la longitud de las palabras en un subporgrama diferente.
-
-
 //?PREGUNTAR: Uso de la funcion 'to_string'.
 
 #include <iostream>
@@ -39,6 +37,7 @@ int main() {
 
         switch (opcionUsuario) {
         case 1:
+            system("cls");
             cout << "INDICACIONES: \n";
             cout << "Tiene la posibilidad de ingresar hasta 4 palabras de 20 caracteres como maximo.\n";
             cout << "Carge una palabra a la vez.\n";
@@ -53,6 +52,7 @@ int main() {
             break;
         case 2:
             if (cargado) {
+                system("cls");
                 mostrarArray(matrizPalabras);
                 cout << "-------------------\n";
                 cout << "Proceso finalizado.\n";
@@ -67,6 +67,7 @@ int main() {
             break;
         case 3:
             if (cargado) {
+                system("cls");
                 TransformarASCII(matrizPalabras);
                 cout << "-------------------\n";
                 cout << "Palabras encriptadas con exito.\n";
@@ -80,16 +81,15 @@ int main() {
             }
             break;
         case 4:
-            if (cargado)
-            {
+            if (cargado) {
+                system("cls");
                 TransformarVocales(matrizPalabras);
                 cout << "-------------------\n";
                 cout << "Palabras encriptadas con exito .\n";
                 system("pause");
                 system("cls");
             }
-            else
-            {
+            else {
                 cout << "No se ha cargado el arreglo de palabras.\n";
                 system("pause");
                 system("cls");
