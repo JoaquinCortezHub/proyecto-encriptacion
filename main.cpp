@@ -1,5 +1,5 @@
 //TODO: Formatear correctamente caracteres ASCII.
-//TODO: Crear copia de matriz original en 'TransformarVocales'.
+////: Crear copia de matriz original en 'TransformarVocales'.
 //TODO: Validar input de palabras.
 //TODO: Implementar cambio de palabras a minusculas.
 
@@ -82,7 +82,6 @@ int main() {
             if (cargado)
             {
                 TransformarVocales(matrizPalabras);
-                mostrarArray(matrizPalabras);
                 cout << "-------------------\n";
                 cout << "Palabras encriptadas con exito .\n";
                 system("pause");
@@ -160,6 +159,14 @@ bool esVocal(char letra) {
 void TransformarVocales(char matrizPalabras[4][20]) {
     char arrayVocales[5] = {'a', 'e', 'i', 'o', 'u'};
     char arrayVocalesDesordenadas[5];
+    char matrizCopia[4][20];
+
+    for(int filas = 0; filas < 4; filas++) { //? Copiamos el arreglo original para no sobreescribirlo en el resto del programa.
+        for(int columnas = 0; columnas < 20; columnas++) {
+            matrizCopia[filas][columnas] = matrizPalabras[filas][columnas];
+        }
+    }
+
     srand(time(NULL)); //? Inicializamos la semilla de generacion.
     for (int i = 0; i < 5; i++) {
         arrayVocalesDesordenadas[i] = arrayVocales[i];
@@ -172,19 +179,26 @@ void TransformarVocales(char matrizPalabras[4][20]) {
     }
     for (int filas = 0; filas < 4; filas++) {
         for (int columnas = 0; columnas < 20; columnas++) {
-            char letraActual = matrizPalabras[filas][columnas];
+            char letraActual = matrizCopia[filas][columnas];
             if (letraActual == '\0') { //? si la palabra termina, deja de evaluar.
                 break;
             }
             if (esVocal(letraActual)) {
                 for (int i = 0; i < 5; i++) {
                     if (letraActual == arrayVocales[i]) {
-                        matrizPalabras[filas][columnas] = arrayVocalesDesordenadas[i]; //? Asigna la vocal desordenada a la posicion actual de la palabra.
+                        matrizCopia[filas][columnas] = arrayVocalesDesordenadas[i]; //? Asigna la vocal desordenada a la posicion actual de la palabra.
                         break;
                     }
                 }
             }
         }
+    }
+    for ( int filas = 0; filas < 4; filas++) {
+        cout << "Palabra " << filas + 1 << ": ";
+        for (int columnas = 0; columnas < 20; columnas++) {
+            cout << matrizCopia[filas][columnas];
+        }
+        cout << "\n";
     }
 }
 void TransformarASCII(char matrizPalabras[4][20]) {
