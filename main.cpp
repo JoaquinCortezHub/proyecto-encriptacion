@@ -5,7 +5,6 @@
 //TODO: Extraer la validación de la longitud de las palabras en un subporgrama diferente.
 
 
-//?PREGUNTAR: Input de palabras completas o letra por letra.
 //?PREGUNTAR: Uso de la funcion 'to_string'.
 
 #include <iostream>
