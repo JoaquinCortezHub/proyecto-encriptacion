@@ -1,7 +1,9 @@
-//TODO: Formatear correctamente caracteres ASCII.
+////: Formatear correctamente caracteres ASCII.
 ////: Crear copia de matriz original en 'TransformarVocales'.
+//!: Implementar cambio de palabras a minusculas.
 //TODO: Validar input de palabras.
-//TODO: Implementar cambio de palabras a minusculas.
+//TODO: Extraer la validación de la longitud de las palabras en un subporgrama diferente.
+
 
 //?PREGUNTAR: Input de palabras completas o letra por letra.
 //?PREGUNTAR: Uso de la funcion 'to_string'.
@@ -107,7 +109,6 @@ int main() {
 //* desarollo de funciones *//
 // cargarArray
 
-// TODO: Extraer la validación de la longitud de las palabras en un subporgrama diferente.
 void cargarArray(char matrizPalabras[4][20]) {
     string palabra;
     for (int filas = 0; filas < 4; filas++) {
