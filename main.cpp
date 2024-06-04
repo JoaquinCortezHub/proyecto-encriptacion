@@ -9,6 +9,7 @@
 #include <iostream>
 #include <string>
 #include <ctime>
+#include <cctype>
 using namespace std;
 
 //* Prototipos *//
@@ -142,7 +143,6 @@ int main() {
 
 //* desarollo de funciones *//
 // cargarArray
-
 void cargarArray(char matrizPalabras[4][20]) {
     string palabra;
     
@@ -152,16 +152,35 @@ void cargarArray(char matrizPalabras[4][20]) {
             cout << "Ingrese la palabra " << filas + 1 << ": \n";
             cin >> palabra;
             int longitudPalabra = palabra.length();
+            for(int i = 0; i < longitudPalabra; i++) { //? Estandariza el input a solo minusculas.
+                palabra[i] = tolower(palabra[i]);
+            }
+
+
 
             if (longitudPalabra > 20) {
                 cout << "La palabra ingresada es demasiado larga. Ingrese una palabra de maximo 20 caracteres.\n";
+                continue;
             }
-            else {
-                palabraValida = true;
-                for (int columnas = 0; columnas < longitudPalabra; columnas++) {
-                    matrizPalabras[filas][columnas] = palabra[columnas];
+            bool caracterValido = true;
+            for(int i = 0; i < longitudPalabra; i++) {
+                if(!isalpha(palabra[i])) {
+                    caracterValido = false;
+                    break;
                 }
             }
+            if(!caracterValido) {
+                cout << "La palabra ingresada contiene caracteres no validos. Ingrese solo letras.\n";
+                continue;
+            }
+
+
+
+            palabraValida = true;
+            for (int columnas = 0; columnas < longitudPalabra; columnas++) {
+                matrizPalabras[filas][columnas] = palabra[columnas];
+            }
+            
             for (int columnas = longitudPalabra; columnas < 20; columnas++) {
                 matrizPalabras[filas][columnas] = '\0'; //? Asigna el caracter nulo a las posiciones vacias. previene simbolos y datos basuras en el display.
             }
@@ -195,19 +214,22 @@ bool esVocal(char letra) {
 void TransformarVocales(char matrizPalabras[4][20], char matrizEncriptada[4][20]) {
     char arrayVocales[5] = {'a', 'e', 'i', 'o', 'u'};
     char arrayVocalesDesordenadas[5];
-
-
-
     srand(time(NULL)); //? Inicializamos la semilla de generacion.
     for (int i = 0; i < 5; i++) {
         arrayVocalesDesordenadas[i] = arrayVocales[i];
     }
+
+
+
     for (int i = 0; i < 5; i++) { //? Mezcla las vocales cambiando la posicion de sus subindices.
         int indiceRandom = rand() % 5;
         char auxiliar = arrayVocalesDesordenadas[i];
         arrayVocalesDesordenadas[i] = arrayVocalesDesordenadas[indiceRandom];
         arrayVocalesDesordenadas[indiceRandom] = auxiliar;
     }
+
+
+
     for (int filas = 0; filas < 4; filas++) {
         for (int columnas = 0; columnas < 20; columnas++) {
             char letraActual = matrizPalabras[filas][columnas];
@@ -227,7 +249,10 @@ void TransformarVocales(char matrizPalabras[4][20], char matrizEncriptada[4][20]
             }
         }
     }
-    for ( int filas = 0; filas < 4; filas++) {
+
+
+
+    for (int filas = 0; filas < 4; filas++) {
         cout << "Palabra " << filas + 1 << ": ";
         for (int columnas = 0; columnas < 20; columnas++) {
             cout << matrizEncriptada[filas][columnas];
@@ -237,23 +262,27 @@ void TransformarVocales(char matrizPalabras[4][20], char matrizEncriptada[4][20]
 }
 void TransformarASCII(char matrizPalabras[4][20], char matrizEncriptadaASCII[4][60]) {
      //? 20 caracteres * 3 digitos del codigo ASCII = 60 columnas maximo.
-
+    
     for (int filas = 0; filas < 4; filas++) {
         int indiceASCII = 0; //? este indice, cambia para colocar cada codigo en el subindice relacionado a la letra de la palabra a encriptar.
-
         for (int columnas = 0; columnas < 20; columnas++) {
             char letraActual = matrizPalabras[filas][columnas];
             if (letraActual == '\0') {
                 break;
             }
 
+
+
             int codigoPalabra = int(letraActual); //? convierte la letra a su respectivo codigo.
             string cadenaASCII = to_string(codigoPalabra); //? convierte dicho codigo a una representacion en forma de string para almacenarlo en la matriz.
-            for (int i = 0; i < cadenaASCII.length(); i++) {
+            int longitudCodigo = cadenaASCII.length();
+            for (int i = 0; i < longitudCodigo; i++) {
                 matrizEncriptadaASCII[filas][indiceASCII++] = cadenaASCII[i];
             }
         }
     }
+
+    
 
     for( int filas = 0; filas < 4; filas++) {
         cout << "Palabra " << filas + 1 << ": ";
