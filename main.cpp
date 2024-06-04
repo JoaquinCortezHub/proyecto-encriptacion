@@ -3,6 +3,7 @@
 //!: Implementar cambio de palabras a minusculas.
 //TODO: Validar input de palabras.
 //TODO: Extraer la validación de la longitud de las palabras en un subporgrama diferente.
+//TODO: Mostrar array original junto con el output encriptado.
 //?PREGUNTAR: Uso de la funcion 'to_string'.
 
 #include <iostream>
@@ -71,6 +72,10 @@ int main() {
         case 3:
             if (cargado) {
                 system("cls");
+                cout << "Arreglo original :\n";
+                mostrarArray(matrizPalabras);
+                cout << "-------------------------------\n";
+                cout << "Arreglo con vocales desordenadas: \n";
                 TransformarVocales(matrizPalabras, matrizEncriptada);
                 cout << "-------------------------------\n";
                 cout << "Palabras encriptadas con exito .\n";
@@ -86,6 +91,10 @@ int main() {
         case 4:
             if (cargado) {
                 system("cls");
+                cout << "Arreglo original :\n";
+                mostrarArray(matrizPalabras);
+                cout << "-------------------------------\n";
+                cout << "Arreglo en codigo ASCII: \n";
                 TransformarASCII(matrizPalabras, matrizEncriptadaASCII);
                 cout << "-------------------\n";
                 cout << "Palabras encriptadas con exito.\n";
@@ -101,6 +110,10 @@ int main() {
         case 5:
             if(cargado) {
                 system("cls");
+                cout << "Arreglo original :\n";
+                mostrarArray(matrizPalabras);
+                cout << "-------------------------------\n";
+                cout << "Arreglo con ambos metodos: \n";
                 transformarAmbos(matrizPalabras);
                 cout << "--------------------------------\n";
                 cout << "Palabras encriptadas con exito .\n";
@@ -117,6 +130,10 @@ int main() {
             cout << "Saliendo del programa...\n";
             cout << "Conexion finalizada.\n";
             break;
+        default:
+            cout << "Opcion Invalida, Ingrese una opcion del menu.\n";
+            system("pause");
+            system("cls");
         }
     } while (opcionUsuario != 0);
 
