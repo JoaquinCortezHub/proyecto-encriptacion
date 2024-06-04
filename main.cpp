@@ -14,13 +14,16 @@ using namespace std;
 void cargarArray(char matrizPalabras[4][20]);
 void mostrarArray(char matrizPalabras[4][20]);
 bool esVocal(char letra);
-void TransformarVocales(char matrizPalabras[4][20]);
-void TransformarASCII(char matrizPalabras[4][20]);
+void TransformarVocales(char matrizPalabras[4][20], char matrizEncriptada[4][20]);
+void TransformarASCII(char matrizPalabras[4][20], char matrizEncriptadaASCII[4][60]);
+void transformarAmbos(char matrizPalabras[4][20]);
 
 int main() {
     int longFilas = 4;
     int longColumnas = 20;
     char matrizPalabras[4][20] = {};
+    char matrizEncriptada[4][20] = {};
+    char matrizEncriptadaASCII[4][60] = {};
     int opcionUsuario;
     bool cargado = false;
 
@@ -29,8 +32,8 @@ int main() {
         cout << "  MENU  \n";
         cout << "(1) - Llenar arreglos de palabras\n";
         cout << "(2) - Mostrar arreglo cargado\n";
-        cout << "(3) - Encriptar con codigo ASCII\n";
-        cout << "(4) - Encriptar con vocales desordenadas\n";
+        cout << "(3) - Encriptar con vocales desordenadas\n";
+        cout << "(4) - Encriptar con codigo ASCII\n";
         cout << "(5) - Encriptar con ambos metodos\n";
         cout << "(0) - Salir del programa\n";
         cin >> opcionUsuario;
@@ -68,9 +71,9 @@ int main() {
         case 3:
             if (cargado) {
                 system("cls");
-                TransformarASCII(matrizPalabras);
-                cout << "-------------------\n";
-                cout << "Palabras encriptadas con exito.\n";
+                TransformarVocales(matrizPalabras, matrizEncriptada);
+                cout << "-------------------------------\n";
+                cout << "Palabras encriptadas con exito .\n";
                 system("pause");
                 system("cls");
             }
@@ -83,8 +86,23 @@ int main() {
         case 4:
             if (cargado) {
                 system("cls");
-                TransformarVocales(matrizPalabras);
+                TransformarASCII(matrizPalabras, matrizEncriptadaASCII);
                 cout << "-------------------\n";
+                cout << "Palabras encriptadas con exito.\n";
+                system("pause");
+                system("cls");
+            }
+            else {
+                cout << "No se ha cargado el arreglo de palabras.\n";
+                system("pause");
+                system("cls");
+            }
+            break;
+        case 5:
+            if(cargado) {
+                system("cls");
+                transformarAmbos(matrizPalabras);
+                cout << "--------------------------------\n";
                 cout << "Palabras encriptadas con exito .\n";
                 system("pause");
                 system("cls");
@@ -110,6 +128,7 @@ int main() {
 
 void cargarArray(char matrizPalabras[4][20]) {
     string palabra;
+    
     for (int filas = 0; filas < 4; filas++) {
         bool palabraValida = false;
         while (!palabraValida) {
@@ -156,16 +175,11 @@ bool esVocal(char letra) {
     return false;
 }
 
-void TransformarVocales(char matrizPalabras[4][20]) {
+void TransformarVocales(char matrizPalabras[4][20], char matrizEncriptada[4][20]) {
     char arrayVocales[5] = {'a', 'e', 'i', 'o', 'u'};
     char arrayVocalesDesordenadas[5];
-    char matrizCopia[4][20];
 
-    for(int filas = 0; filas < 4; filas++) { //? Copiamos el arreglo original para no sobreescribirlo en el resto del programa.
-        for(int columnas = 0; columnas < 20; columnas++) {
-            matrizCopia[filas][columnas] = matrizPalabras[filas][columnas];
-        }
-    }
+
 
     srand(time(NULL)); //? Inicializamos la semilla de generacion.
     for (int i = 0; i < 5; i++) {
@@ -179,30 +193,33 @@ void TransformarVocales(char matrizPalabras[4][20]) {
     }
     for (int filas = 0; filas < 4; filas++) {
         for (int columnas = 0; columnas < 20; columnas++) {
-            char letraActual = matrizCopia[filas][columnas];
+            char letraActual = matrizPalabras[filas][columnas];
             if (letraActual == '\0') { //? si la palabra termina, deja de evaluar.
                 break;
             }
             if (esVocal(letraActual)) {
                 for (int i = 0; i < 5; i++) {
                     if (letraActual == arrayVocales[i]) {
-                        matrizCopia[filas][columnas] = arrayVocalesDesordenadas[i]; //? Asigna la vocal desordenada a la posicion actual de la palabra.
+                        matrizEncriptada[filas][columnas] = arrayVocalesDesordenadas[i]; //? Asigna la vocal desordenada a la posicion actual de la palabra.
                         break;
                     }
                 }
+            }
+            else {
+                matrizEncriptada[filas][columnas] = letraActual;
             }
         }
     }
     for ( int filas = 0; filas < 4; filas++) {
         cout << "Palabra " << filas + 1 << ": ";
         for (int columnas = 0; columnas < 20; columnas++) {
-            cout << matrizCopia[filas][columnas];
+            cout << matrizEncriptada[filas][columnas];
         }
         cout << "\n";
     }
 }
-void TransformarASCII(char matrizPalabras[4][20]) {
-    char matrizASCII[4][60] = {}; //? 20 caracteres * 3 digitos del codigo ASCII = 60 columnas maximo.
+void TransformarASCII(char matrizPalabras[4][20], char matrizEncriptadaASCII[4][60]) {
+     //? 20 caracteres * 3 digitos del codigo ASCII = 60 columnas maximo.
 
     for (int filas = 0; filas < 4; filas++) {
         int indiceASCII = 0; //? este indice, cambia para colocar cada codigo en el subindice relacionado a la letra de la palabra a encriptar.
@@ -216,7 +233,7 @@ void TransformarASCII(char matrizPalabras[4][20]) {
             int codigoPalabra = int(letraActual); //? convierte la letra a su respectivo codigo.
             string cadenaASCII = to_string(codigoPalabra); //? convierte dicho codigo a una representacion en forma de string para almacenarlo en la matriz.
             for (int i = 0; i < cadenaASCII.length(); i++) {
-                matrizASCII[filas][indiceASCII++] = cadenaASCII[i];
+                matrizEncriptadaASCII[filas][indiceASCII++] = cadenaASCII[i];
             }
         }
     }
@@ -224,9 +241,22 @@ void TransformarASCII(char matrizPalabras[4][20]) {
     for( int filas = 0; filas < 4; filas++) {
         cout << "Palabra " << filas + 1 << ": ";
         for( int columnas = 0; columnas < 60; columnas++) {
-            cout << matrizASCII[filas][columnas];
+            cout << matrizEncriptadaASCII[filas][columnas];
         }
         cout << "\n";
     }
 }
-// TransformarAmbos
+//TransformarAmbos
+void transformarAmbos(char matrizPalabras[4][20]) {
+    char matrizVocalesEncriptadas[4][20] = {};
+    char matrizEncriptadaFinal[4][60] = {};
+    
+    cout << "Primera Encriptacion: Vocales desordenadas: \n";
+    TransformarVocales(matrizPalabras, matrizVocalesEncriptadas);
+    cout << "-------------------------------------------\n";
+    system("pause");
+    cout << "Segunda Encriptacion: Palabras a codigo ASCII: \n";
+    TransformarASCII(matrizVocalesEncriptadas, matrizEncriptadaFinal);
+}
+
+
