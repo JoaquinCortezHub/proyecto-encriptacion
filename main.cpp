@@ -1,9 +1,9 @@
 ////: Formatear correctamente caracteres ASCII.
 ////: Crear copia de matriz original en 'TransformarVocales'.
+////: Mostrar array original junto con el output encriptado.
+////: Extraer la validación de la longitud de las palabras en un subporgrama diferente.
 //!: Implementar cambio de palabras a minusculas.
 //TODO: Validar input de palabras.
-//TODO: Extraer la validación de la longitud de las palabras en un subporgrama diferente.
-//TODO: Mostrar array original junto con el output encriptado.
 //?PREGUNTAR: Uso de la funcion 'to_string'.
 
 #include <iostream>
