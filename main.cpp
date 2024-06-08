@@ -2,8 +2,8 @@
 ////: Crear copia de matriz original en 'TransformarVocales'.
 ////: Mostrar array original junto con el output encriptado.
 ////: Extraer la validación de la longitud de las palabras en un subporgrama diferente.
-//!: Implementar cambio de palabras a minusculas.
-//TODO: Validar input de palabras.
+////: Implementar cambio de palabras a minusculas.
+////: Validar input de palabras.
 //?PREGUNTAR: Uso de la funcion 'to_string'.
 
 #include <iostream>
@@ -17,7 +17,7 @@ void cargarArray(char matrizPalabras[4][20]);
 void mostrarArray(char matrizPalabras[4][20]);
 bool esVocal(char letra);
 void TransformarVocales(char matrizPalabras[4][20], char matrizEncriptada[4][20]);
-void TransformarASCII(char matrizPalabras[4][20], char matrizEncriptadaASCII[4][60]);
+void TransformarASCII(char matrizPalabras[4][20]);
 void transformarAmbos(char matrizPalabras[4][20]);
 
 int main() {
@@ -96,7 +96,7 @@ int main() {
                 mostrarArray(matrizPalabras);
                 cout << "-------------------------------\n";
                 cout << "Arreglo en codigo ASCII: \n";
-                TransformarASCII(matrizPalabras, matrizEncriptadaASCII);
+                TransformarASCII(matrizPalabras);
                 cout << "-------------------\n";
                 cout << "Palabras encriptadas con exito.\n";
                 system("pause");
@@ -162,6 +162,7 @@ void cargarArray(char matrizPalabras[4][20]) {
                 cout << "La palabra ingresada es demasiado larga. Ingrese una palabra de maximo 20 caracteres.\n";
                 continue;
             }
+            
             bool caracterValido = true;
             for(int i = 0; i < longitudPalabra; i++) {
                 if(!isalpha(palabra[i])) {
@@ -260,9 +261,10 @@ void TransformarVocales(char matrizPalabras[4][20], char matrizEncriptada[4][20]
         cout << "\n";
     }
 }
-void TransformarASCII(char matrizPalabras[4][20], char matrizEncriptadaASCII[4][60]) {
+void TransformarASCII(char matrizPalabras[4][20]) {
      //? 20 caracteres * 3 digitos del codigo ASCII = 60 columnas maximo.
-    
+    char matrizEncriptadaASCII[4][60] = {};
+
     for (int filas = 0; filas < 4; filas++) {
         int indiceASCII = 0; //? este indice, cambia para colocar cada codigo en el subindice relacionado a la letra de la palabra a encriptar.
         for (int columnas = 0; columnas < 20; columnas++) {
@@ -295,14 +297,13 @@ void TransformarASCII(char matrizPalabras[4][20], char matrizEncriptadaASCII[4][
 //TransformarAmbos
 void transformarAmbos(char matrizPalabras[4][20]) {
     char matrizVocalesEncriptadas[4][20] = {};
-    char matrizEncriptadaFinal[4][60] = {};
     
     cout << "Primera Encriptacion: Vocales desordenadas: \n";
     TransformarVocales(matrizPalabras, matrizVocalesEncriptadas);
     cout << "-------------------------------------------\n";
     system("pause");
     cout << "Segunda Encriptacion: Palabras a codigo ASCII: \n";
-    TransformarASCII(matrizVocalesEncriptadas, matrizEncriptadaFinal);
+    TransformarASCII(matrizVocalesEncriptadas);
 }
 
 
