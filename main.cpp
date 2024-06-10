@@ -252,13 +252,20 @@ void TransformarVocales(char matrizPalabras[4][20], char matrizEncriptada[4][20]
     }
 
 
-
     for (int filas = 0; filas < 4; filas++) {
         cout << "Palabra " << filas + 1 << ": ";
         for (int columnas = 0; columnas < 20; columnas++) {
             cout << matrizEncriptada[filas][columnas];
         }
         cout << "\n";
+    }
+    cout << "------------------------------------------\n";
+    cout << "Para obtener los datos de desencriptacion: \n";
+    system("pause");
+    system("cls");
+    cout << "Datos para desencriptar: \n";
+    for(int i = 0; i < 5; i++) {
+        cout << "La " << arrayVocales[i] << " se reemplaza por la " << arrayVocalesDesordenadas[i] << "\n";
     }
 }
 void TransformarASCII(char matrizPalabras[4][20]) {
